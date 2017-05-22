@@ -1,0 +1,58 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #a1634e;
+}
+
+.jumbotron {
+    background: #5eba34;
+    border: 1px #214012 groove;
+  }
+
+.text-center {
+  color: #ffffff;
+}
+  
+  h1 {
+    color: #F2F2F7;
+    font-size: 35pt;
+    font-family: 'Futura';
+  }
+  
+  h2 {
+    color: #9F9FC9;
+    font-family: 'Futura';
+  }
+  
+  .heading1 {
+    background: #5eba34;
+    font-family: 'Futura';
+    border: 1px #214012 groove;
+  }
+  
+  #decription {
+    text-align: center;
+    font-size: 18pt;
+    color: #2A719F;
+    font-family: 'Futura';
+    padding: 35px 10px 35px 10px;
+  }
+}
+#panel-color {
+  background: #5eba34;
+}
+.panel .panel-default {
+  color: #4d78a0;
+  background: #5eba34;
+}
+.panel-title {
+  color: white;
+  padding: 1%;
+}
+#submit {
+  background: #5eba34;
+  color: white;
+  border: 1px #214012 groove;
+}
