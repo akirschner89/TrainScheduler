@@ -18,12 +18,11 @@
 
 
   $("#submit").on("click", function() {
-    // Don't refresh the page!
     event.preventDefault();
 
     var name = $("#trainName").val().trim();
     var destination = $("#destination").val().trim();
-    var firstTrain = $("#firstTrain").val();
+    var firstTrain = $("#firstTrain").val().trim();
     var frequency = $("#frequency").val().trim();
 
     // Log our inputs to see if the app is working
@@ -32,13 +31,7 @@
     console.log(destination);
     console.log(firstTrain);
     console.log(frequency);
-    console.log(moment(firstTrain).format("X"));
-
-    // var monthToDate = moment(date).
-
-
-    //Diplays the input information on Firebase
-
+    // console.log(moment("firstTrain", "hmm").format("HH:mm"));
     database.ref().push({
 
       name: name,
@@ -51,7 +44,6 @@
   });
 
   // Fetch our data from Firebase and display as html on app.
-
   database.ref().on("child_added", function(childSnapshot) {
 
       // Log everything that's coming out of snapshot
@@ -59,15 +51,41 @@
       console.log(childSnapshot.val().destination);
       console.log(childSnapshot.val().arrival);
       console.log(childSnapshot.val().frequency_min);
-      // console.log(childSnapshot.val().joinDate);
 
-      // full list of items to the well
+      var trainTime = moment(childSnapshot.val().arrival,"HH:mma");
+      var currentTime = moment();
+      // var currentTimeFormatted = currentTime.format("HH:mma");
+      var minDiff = trainTime.diff(currentTime, "minutes");
+
+      console.log(trainTime.format("HH:mma"));
+      console.log(currentTime.format("HH:mma"));
+      // console.log(trainTime.diff(currentTime, "minutes"));
+      console.log(minDiff);
+
+// to compensate for negative minutes - get the same time in the next 24 hours to display
+      if (minDiff < 0) {
+        minDiff = minDiff + 1440;
+        console.log(minDiff);
+      };
+
+
+
+      // full list of items to the table
       $(".table").append("<tr class='table-row'><td class='name'> " + childSnapshot.val().name +
         " </td><td class='destination'> " + childSnapshot.val().destination +
         " </td><td class='frequency'> " + childSnapshot.val().frequency_min +
-        " </td><td class='arrival'> " + childSnapshot.val().arrival + " </td></tr>");
+        " </td><td class='arrival'> " + childSnapshot.val().arrival + 
+        " </td><td class='minutes'> " + minDiff + "</td></tr>");
 
     // Handle the errors
     }, function(errorObject) {
       console.log("Errors handled: " + errorObject.code);
     });
+
+
+
+  // TODO
+
+  // can update minutes displayed by using setInterval for every 60 seconds = update the HTML with my function to find the difference between arrival value in fyrebase vs current time
+
+// can add update buttons and remove buttons - each with their own on."click" functions - update should also push to fyrebase
